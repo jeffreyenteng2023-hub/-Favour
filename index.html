@@ -1,0 +1,621 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Project Favour | A Little Surprise</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Poppins:wght@300;400;500;600&family=Great+Vibes&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --blue: #168aff;
+    --light: #75c5ff;
+    --bg: #02050d;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background: var(--bg);
+    color: white;
+    font-family: 'Poppins', sans-serif;
+    overflow-x: hidden;
+}
+
+#stars {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.star {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    border-radius: 50%;
+    background: #72bfff;
+    box-shadow: 0 0 9px #168aff;
+    animation: twinkle 3s infinite alternate;
+}
+
+@keyframes twinkle {
+    from { opacity: .15; transform: scale(.6); }
+    to { opacity: 1; transform: scale(1.5); }
+}
+
+.glow {
+    position: fixed;
+    width: 350px;
+    height: 350px;
+    background: #005bff;
+    filter: blur(150px);
+    opacity: .12;
+    pointer-events: none;
+    border-radius: 50%;
+    z-index: 0;
+}
+
+#intro {
+    position: fixed;
+    inset: 0;
+    z-index: 10;
+    background: #02050d;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    transition: 1s;
+    padding: 20px;
+}
+
+.orb {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    border: 1px solid #168aff;
+    display: grid;
+    place-items: center;
+    box-shadow: 0 0 25px #087bff, inset 0 0 25px #087bff;
+    animation: pulse 2s infinite;
+    margin-bottom: 35px;
+    font-size: 40px;
+    color: #70c5ff;
+}
+
+@keyframes pulse {
+    50% {
+        box-shadow: 0 0 65px #168aff, inset 0 0 35px #087bff;
+    }
+}
+
+.intro-small {
+    color: #7bbfff;
+    letter-spacing: 5px;
+    font-size: 10px;
+    margin-bottom: 15px;
+}
+
+#intro h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(35px, 8vw, 65px);
+    margin-bottom: 15px;
+}
+
+#intro p {
+    color: #8296b2;
+    font-size: 13px;
+    margin-bottom: 35px;
+}
+
+.open-btn, .discover {
+    border: 1px solid #168aff;
+    color: white;
+    background: linear-gradient(120deg, #064b9a, #03152f);
+    padding: 15px 30px;
+    border-radius: 40px;
+    cursor: pointer;
+    font-family: inherit;
+    letter-spacing: 1px;
+    transition: .4s;
+}
+
+.open-btn:hover, .discover:hover {
+    box-shadow: 0 0 30px #168aff;
+    transform: translateY(-4px);
+}
+
+#main {
+    display: none;
+    position: relative;
+    z-index: 1;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 25px 8%;
+    border-bottom: 1px solid #12233c;
+}
+
+.logo {
+    font-family: 'Great Vibes', cursive;
+    font-size: 35px;
+    color: #5cb4ff;
+    text-shadow: 0 0 15px #168aff;
+}
+
+.nav-tag {
+    color: #8299b9;
+    font-size: 11px;
+    letter-spacing: 2px;
+}
+
+.hero {
+    min-height: 620px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 70px 20px;
+    position: relative;
+}
+
+.tag {
+    color: #65baff;
+    font-size: 10px;
+    letter-spacing: 5px;
+    margin-bottom: 25px;
+}
+
+.hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(65px, 13vw, 125px);
+    font-weight: 400;
+    line-height: 1;
+}
+
+.hero h1 span {
+    color: #258dff;
+    text-shadow: 0 0 30px #087bff;
+    font-style: italic;
+}
+
+.hero .sub {
+    color: #a3b5cd;
+    font-size: 14px;
+    max-width: 430px;
+    line-height: 2;
+    margin: 30px 0;
+}
+
+.orbit {
+    width: 200px;
+    height: 200px;
+    border: 1px solid rgba(37,141,255,.3);
+    border-radius: 50%;
+    position: absolute;
+    top: 48%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    z-index: -1;
+    box-shadow: 0 0 70px rgba(0,100,255,.13);
+}
+
+.orbit:before {
+    content: '';
+    position: absolute;
+    width: 9px;
+    height: 9px;
+    background: #55baff;
+    border-radius: 50%;
+    top: 20px;
+    left: 30px;
+    box-shadow: 0 0 20px #168aff;
+}
+
+.section {
+    padding: 90px 8%;
+    text-align: center;
+}
+
+.section-tag {
+    color: #3f9fff;
+    font-size: 10px;
+    letter-spacing: 5px;
+    margin-bottom: 18px;
+}
+
+.section h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(30px, 6vw, 48px);
+    font-weight: 400;
+    margin-bottom: 18px;
+}
+
+.section-desc {
+    color: #8295af;
+    font-size: 13px;
+    line-height: 2;
+    max-width: 480px;
+    margin: auto;
+}
+
+.gift {
+    width: 210px;
+    height: 170px;
+    margin: 55px auto 25px;
+    position: relative;
+    cursor: pointer;
+    transition: .5s;
+}
+
+.gift:hover {
+    transform: translateY(-10px);
+}
+
+.gift-box {
+    position: absolute;
+    bottom: 0;
+    width: 210px;
+    height: 125px;
+    background: linear-gradient(120deg,#05265b,#0879eb,#031b43);
+    border: 1px solid #5ab6ff;
+    border-radius: 8px;
+    box-shadow: 0 0 35px rgba(0,120,255,.3);
+}
+
+.gift-lid {
+    position: absolute;
+    top: 27px;
+    left: -10px;
+    width: 230px;
+    height: 35px;
+    background: linear-gradient(120deg,#0750aa,#1a8dff,#06336f);
+    border: 1px solid #70c6ff;
+    border-radius: 6px;
+    transition: .8s;
+    z-index: 2;
+}
+
+.ribbon {
+    position: absolute;
+    left: 95px;
+    width: 20px;
+    height: 170px;
+    background: linear-gradient(90deg,#168aff,#9ddaff,#168aff);
+    z-index: 3;
+}
+
+.bow {
+    position: absolute;
+    top: 0;
+    left: 80px;
+    width: 50px;
+    height: 35px;
+    border: 7px solid #69baff;
+    border-radius: 50% 50% 0 50%;
+    transform: rotate(30deg);
+    z-index: 4;
+}
+
+.gift.opened .gift-lid {
+    transform: translate(20px,-90px) rotate(20deg);
+}
+
+.gift.opened {
+    filter: drop-shadow(0 0 25px #168aff);
+}
+
+.gift-hint {
+    color: #65baff;
+    font-size: 12px;
+    letter-spacing: 2px;
+}
+
+.message-card {
+    max-width: 520px;
+    margin: 45px auto;
+    padding: 35px 25px;
+    border: 1px solid rgba(52,153,255,.4);
+    border-radius: 18px;
+    background: linear-gradient(145deg,rgba(8,30,64,.8),rgba(2,5,13,.9));
+    box-shadow: 0 0 40px rgba(0,100,255,.08);
+    display: none;
+    animation: reveal 1s ease;
+}
+
+@keyframes reveal {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.message-card p {
+    color: #b9cce4;
+    font-size: 13px;
+    line-height: 2.2;
+    margin-top: 20px;
+}
+
+.signature {
+    font-family: 'Great Vibes', cursive;
+    color: #55b4ff;
+    font-size: 35px;
+    margin-top: 25px;
+}
+
+footer {
+    border-top: 1px solid #14243b;
+    padding: 35px 15px;
+    text-align: center;
+    color: #55718f;
+    font-size: 10px;
+    letter-spacing: 4px;
+}
+
+footer span {
+    color: #258dff;
+}
+
+@media(max-width:600px) {
+    nav {
+        padding: 20px 6%;
+    }
+
+    .hero {
+        min-height: 570px;
+    }
+
+    .section {
+        padding: 75px 6%;
+    }
+
+    .nav-tag {
+        font-size: 9px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="glow" style="top:5%;left:-100px"></div>
+<div class="glow" style="bottom:5%;right:-100px"></div>
+
+<div id="stars"></div>
+
+<!-- INTRO SCREEN -->
+<div id="intro">
+
+    <div class="orb">✦</div>
+
+    <div class="intro-small">
+        A LITTLE SOMETHING DIFFERENT
+    </div>
+
+    <h1>Something awaits...</h1>
+
+    <p>This little corner of the internet belongs to you.</p>
+
+    <button class="open-btn" onclick="enterSite()">
+        OPEN YOUR SURPRISE ↗
+    </button>
+
+</div>
+
+<!-- MAIN WEBSITE -->
+<div id="main">
+
+<nav>
+    <div class="logo">Jeffrey ♡</div>
+
+    <div class="nav-tag">
+        AN EXPERIENCE FOR FAVOUR
+    </div>
+</nav>
+
+<!-- HERO SECTION -->
+<section class="hero">
+
+    <div class="orbit"></div>
+
+    <div class="tag">
+        ✦ NOT EVERY DAY IS ORDINARY ✦
+    </div>
+
+    <h1>
+        Hey, <span>Favour.</span>
+    </h1>
+
+    <p class="sub">
+        Some people make ordinary conversations
+        feel a little more interesting.
+        And sometimes, a little creativity is
+        the perfect way to say that.
+    </p>
+
+    <button class="discover"
+    onclick="document.getElementById('surprise').scrollIntoView({behavior:'smooth'})">
+
+        DISCOVER YOUR SURPRISE ↓
+
+    </button>
+
+</section>
+
+<!-- GIFT SECTION -->
+<section class="section" id="surprise">
+
+    <div class="section-tag">
+        A SMALL MYSTERY
+    </div>
+
+    <h2>Something is waiting for you.</h2>
+
+    <p class="section-desc">
+        Not everything needs a reason.
+        Sometimes it's just nice to make
+        someone smile.
+    </p>
+
+    <div class="gift" id="gift" onclick="openGift()">
+
+        <div class="gift-lid"></div>
+
+        <div class="bow"></div>
+
+        <div class="ribbon"></div>
+
+        <div class="gift-box"></div>
+
+    </div>
+
+    <div class="gift-hint" id="hint">
+        TAP THE GIFT TO UNLOCK YOUR MESSAGE ✦
+    </div>
+
+    <!-- HIDDEN MESSAGE -->
+    <div class="message-card" id="card">
+
+        <div class="section-tag">
+            A NOTE FOR YOU
+        </div>
+
+        <h2>Dear Favour,</h2>
+
+        <p>
+            I just wanted to create something different
+            and give you a little surprise.
+
+            <br><br>
+
+            I'm glad we got to know each other.
+            Here's to interesting conversations,
+            unexpected laughter and good memories.
+
+            <br><br>
+
+            Never underestimate how much a little
+            kindness can brighten someone's day.
+
+            <br><br>
+
+            Stay amazing. 💙
+        </p>
+
+        <div class="signature">
+            — Jeffrey
+        </div>
+
+    </div>
+
+</section>
+
+<!-- FINAL SECTION -->
+<section class="section">
+
+    <div class="section-tag">
+        ONE LAST THING
+    </div>
+
+    <h2>Keep shining, Favour.</h2>
+
+    <p class="section-desc">
+        The world has enough ordinary things.
+        Keep being your own kind of extraordinary.
+    </p>
+
+</section>
+
+<footer>
+    SPECIALLY MADE FOR <span>FAVOUR</span> 💙
+</footer>
+
+</div>
+
+<script>
+
+// CREATE STARS
+const stars = document.getElementById("stars");
+
+for(let i = 0; i < 100; i++) {
+
+    const s = document.createElement("div");
+
+    s.className = "star";
+
+    s.style.left = Math.random() * 100 + "%";
+
+    s.style.top = Math.random() * 100 + "%";
+
+    s.style.animationDelay = Math.random() * 4 + "s";
+
+    s.style.animationDuration =
+        (2 + Math.random() * 4) + "s";
+
+    stars.appendChild(s);
+}
+
+// ENTER WEBSITE
+function enterSite() {
+
+    const intro = document.getElementById("intro");
+
+    intro.style.opacity = "0";
+
+    intro.style.transform = "scale(1.15)";
+
+    setTimeout(() => {
+
+        intro.style.display = "none";
+
+        document.getElementById("main").style.display = "block";
+
+        window.scrollTo(0, 0);
+
+    }, 1000);
+
+}
+
+// OPEN GIFT
+function openGift() {
+
+    const gift = document.getElementById("gift");
+
+    const card = document.getElementById("card");
+
+    const hint = document.getElementById("hint");
+
+    if(card.style.display === "block") return;
+
+    gift.classList.add("opened");
+
+    hint.innerText = "A LITTLE SURPRISE FOR YOU 💙";
+
+    setTimeout(() => {
+
+        card.style.display = "block";
+
+        hint.innerText = "MESSAGE UNLOCKED ✦";
+
+    }, 700);
+
+}
+
+</script>
+
+</body>
+</html>
